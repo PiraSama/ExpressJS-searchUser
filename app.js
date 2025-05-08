@@ -2,6 +2,8 @@ const express = require('express');
 const mysql = require('mysql2/promise');
 const path = require('path');
 const session = require('express-session');
+const userRoutes = require('./routes/user');
+
 const app = express();
 
 // Middleware
@@ -15,6 +17,7 @@ app.use(session({
 }));
 app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/users', userRoutes);
 
 // View engine setup
 app.set('view engine', 'ejs');
@@ -24,7 +27,7 @@ app.set('views', path.join(__dirname, 'views'));
 const pool = mysql.createPool({
     host: '127.0.0.1',
     user: 'root',
-    password: 'admin',
+    password: '',
     database: 'social_media_web',
     waitForConnections: true,
     connectionLimit: 10,
@@ -140,6 +143,7 @@ app.post('/comment/:postId', isAuthenticated, async (req, res) => {
         res.status(500).json({ success: false, error: 'Server Error' });
     }
 });
+
 
 // Start server
 const PORT = process.env.PORT || 3000;

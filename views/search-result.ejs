@@ -1,0 +1,30 @@
+<!-- views/search-result.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Kết quả tìm kiếm</h1>
+
+    <% if (error) { %>
+        <p style="color: red;"><%= error %></p>
+    <% } else if (users && users.length > 0) { %>
+        <ul>
+            <% users.forEach(user => { %>
+                <li>
+                    <p><strong>Username:</strong> <%= user.username %></p>
+                    <p><strong>Avatar:</strong> <img src="<%= user.avatar_url %>" alt="Avatar" width="50"></p>
+                    <p><strong>Created at:</strong> <%= user.created_at %></p>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>Không tìm thấy người dùng nào.</p>
+    <% } %>
+
+    <a href="/">Trở lại trang chủ</a>
+</body>
+</html>
